@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uet.dbms.GUIControllers.LoginController">
+   <children>
+      <TextField fx:id="usernameField" layoutX="536.0" layoutY="134.0" prefHeight="40.0" prefWidth="320.0" promptText="uet_dbms">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextField>
+      <PasswordField fx:id="passwordField" layoutX="536.0" layoutY="226.0" prefHeight="40.0" prefWidth="320.0" promptText="******">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </PasswordField>
+      <Button layoutX="377.0" layoutY="335.0" mnemonicParsing="false" onAction="#loginButtonOnClick" prefHeight="40.0" prefWidth="478.0" text="Start Now!" textFill="ORANGERED">
+         <font>
+            <Font name="Forte" size="24.0" />
+         </font>
+      </Button>
+      <Label layoutX="525.0" layoutY="412.0" text="No account yet. Register now!" textFill="#0b7499">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="563.0" layoutY="444.0" text="Or login as Guest" textFill="#0b7499">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="379.0" layoutY="493.0" mnemonicParsing="false" onAction="#registerButtonOnClick" prefHeight="40.0" prefWidth="238.0" text="Register Now!" textFill="ORANGERED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="618.0" layoutY="493.0" mnemonicParsing="false" onAction="#loginAsGuestButtonOnClick" prefHeight="40.0" prefWidth="237.0" text="Login As Guest!" textFill="ORANGERED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Label fx:id="messageLabel" layoutX="550.0" layoutY="300" textFill="#c91919">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="377.0" layoutY="146.0" text="Username" textFill="ORANGERED">
+         <font>
+            <Font name="Forte" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="379.0" layoutY="238.0" text="Password" textFill="ORANGERED">
+         <font>
+            <Font name="Forte" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="533.0" layoutY="30.0" text="Login" textFill="#bc3939">
+         <font>
+            <Font name="Jokerman" size="48.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc3939" height="600.0" stroke="BLACK" strokeType="INSIDE" width="329.0" />
+   </children>
+</AnchorPane>
