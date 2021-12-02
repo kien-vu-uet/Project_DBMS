@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -66,5 +68,15 @@
          </font>
       </Label>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc3939" height="600.0" stroke="BLACK" strokeType="INSIDE" width="329.0" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="90.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/icon.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="40.0" layoutY="364.0" text="My Dictionary" textFill="#bde517">
+         <font>
+            <Font name="Jokerman" size="36.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

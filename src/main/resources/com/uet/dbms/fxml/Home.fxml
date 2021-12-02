@@ -18,7 +18,7 @@
    <children>
       <Pane fx:id="rootPane" layoutY="-150.0" prefHeight="750.0" prefWidth="900.0">
          <children>
-            <Pane prefHeight="150.0" prefWidth="900.0">
+            <Pane prefHeight="150.0" prefWidth="900.0" style="-fx-background-color: #ffa500;">
                <children>
                   <Label fx:id="usernameLabel" layoutX="63.0" layoutY="94.0" text="Guest" textFill="#32288a">
                      <font>
@@ -72,7 +72,7 @@
             </Pane>
             <Pane layoutY="150.0" prefHeight="600.0" prefWidth="900.0">
                <children>
-                  <Pane fx:id="queryWordPane" prefHeight="600.0" prefWidth="900.0">
+                  <Pane fx:id="queryWordPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffefd5;">
                      <children>
                         <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true" />
                         <TextField fx:id="searchArea" layoutX="110.0" layoutY="101.0" onKeyTyped="#searchAreaOnTyping" prefHeight="41.0" prefWidth="597.0" style="-fx-border-color: #87cefa;">
@@ -190,7 +190,7 @@
                         <ListView fx:id="relatedWordListView" accessibleRole="BUTTON" layoutX="110.0" layoutY="143.0" onMouseClicked="#relatedWordListOnClicked" prefHeight="31.0" prefWidth="597.0" visible="false" />
                      </children>
                   </Pane>
-                  <Pane fx:id="favouriteWordPane" prefHeight="600.0" prefWidth="900.0" visible="false">
+                  <Pane fx:id="favouriteWordPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #afeeee;" visible="false">
                      <children>
                         <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true" />
                         <Pane layoutX="63.0" layoutY="77.0" prefHeight="480.0" prefWidth="775.0">
@@ -200,7 +200,7 @@
                            </children></Pane>
                      </children>
                   </Pane>
-                  <Pane fx:id="translateTextPane" prefHeight="600.0" prefWidth="900.0" visible="false">
+                  <Pane fx:id="translateTextPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #afeeee;" visible="false">
                      <children>
                         <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true" />
                         <TextArea fx:id="inputTextArea" layoutX="95.0" layoutY="83.0" prefHeight="200.0" prefWidth="711.0" style="-fx-border-color: #ff00ff;" wrapText="true">

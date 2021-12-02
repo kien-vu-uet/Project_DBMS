@@ -62,7 +62,6 @@ public class HomeController {
     @FXML private TextArea inputTextArea;
     @FXML private TextArea translatedTextAea;
 
-    @FXML private Pane showFavouritePane;
     @FXML private ListView<Text> topicListView;
     @FXML private ListView<Text> wordsListView;
     /////////////////////////////////////////////////////////////////
@@ -126,6 +125,12 @@ public class HomeController {
         shownInScene[0] = true;
         shownInScene[1] = false;
         shownInScene[2] = false;
+        wordFound = null;
+        searchArea.setText("");
+        wordArea.setText("");
+        descriptionArea.setText("");
+        pronunciationArea.setText("");
+        queryOptionPane.setVisible(false);
         setMainScene();
     }
 
@@ -134,6 +139,8 @@ public class HomeController {
         shownInScene[0] = false;
         shownInScene[1] = true;
         shownInScene[2] = false;
+        inputTextArea.setText("");
+        translatedTextAea.setText("");
         setMainScene();
     }
 
@@ -208,7 +215,7 @@ public class HomeController {
         Text selectedItem = relatedWordListView.getSelectionModel().getSelectedItem();
         int pos = relatedWordListView.getItems().indexOf(selectedItem);
         wordFound = relatedWordList.get(pos);
-        this.searchButtonOnClicked();
+        searchButtonOnClicked();
     }
 
     @FXML
@@ -364,6 +371,7 @@ public class HomeController {
     //===================== user's favourite word set up ==========//
     private void createTopicGUI() {
         topicListView.getItems().clear();
+        wordsListView.getItems().clear();
         for (int i = 0; i < favouriteTopicList.size(); i++) {
             Topic topic = favouriteTopicList.get(i);
             Text renameOption = new Text("Rename");
