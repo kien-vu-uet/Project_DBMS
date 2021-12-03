@@ -18,7 +18,7 @@
    <children>
       <Pane fx:id="rootPane" layoutY="-150.0" prefHeight="750.0" prefWidth="900.0">
          <children>
-            <Pane prefHeight="150.0" prefWidth="900.0" style="-fx-background-color: #ffa500;">
+            <Pane prefHeight="150.0" prefWidth="900.0" style="-fx-background-color: #e0ffff;">
                <children>
                   <Label fx:id="usernameLabel" layoutX="63.0" layoutY="94.0" text="Guest" textFill="#32288a">
                      <font>
@@ -190,7 +190,7 @@
                         <ListView fx:id="relatedWordListView" accessibleRole="BUTTON" layoutX="110.0" layoutY="143.0" onMouseClicked="#relatedWordListOnClicked" prefHeight="31.0" prefWidth="597.0" visible="false" />
                      </children>
                   </Pane>
-                  <Pane fx:id="favouriteWordPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #afeeee;" visible="false">
+                  <Pane fx:id="favouriteWordPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #fa8072;" visible="false">
                      <children>
                         <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true" />
                         <Pane layoutX="63.0" layoutY="77.0" prefHeight="480.0" prefWidth="775.0">
