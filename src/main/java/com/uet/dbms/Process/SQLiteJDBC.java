@@ -29,7 +29,7 @@ public class SQLiteJDBC {
         }
     }
 
-    public static Word queryWordById(int id) throws RuntimeException {
+    public static Word targetSearch(String target) throws RuntimeException {
         Word result = null;
         Connection connection = null;
         Statement statement = null;
@@ -38,7 +38,8 @@ public class SQLiteJDBC {
             connection = DriverManager.getConnection("jdbc:sqlite:dictionary.db");
             connection.setAutoCommit(false);
             statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM EngToVie Where word_id = " + id + ";" );
+            ResultSet rs = statement.executeQuery("SELECT * FROM EngToVie Where word = \"" + target + "\";" );
+            int id = rs.getInt("word_id");
             String word = rs.getString("word");
             String description = rs.getString("description");
             String pronounce = rs.getString("pronounce");
@@ -162,11 +163,9 @@ public class SQLiteJDBC {
             statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT user_id, password FROM `User_Account` WHERE username = '" + username + "';");
             String truePassword = rs.getString("password");
-//            System.out.println(username + "\n" + truePassword);
             if (password.equals(truePassword)) {
                 res = rs.getInt("user_id");
-//                System.out.println("True password!");
-            } //else System.out.println("Password does not match");
+            }
             statement.close();
             connection.commit();
         } catch (Exception e) {

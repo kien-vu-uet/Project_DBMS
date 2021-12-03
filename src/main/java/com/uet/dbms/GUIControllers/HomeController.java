@@ -215,13 +215,16 @@ public class HomeController {
         Text selectedItem = relatedWordListView.getSelectionModel().getSelectedItem();
         int pos = relatedWordListView.getItems().indexOf(selectedItem);
         wordFound = relatedWordList.get(pos);
+        searchArea.setText(wordFound.getTarget());
         searchButtonOnClicked();
     }
 
     @FXML
     private void searchButtonOnClicked() {
-        if (wordFound == null && (relatedWordList == null || relatedWordList.isEmpty())) {
-            relatedWordListView.setVisible(false);
+        String target = searchArea.getText();
+        Word temp = SQLiteJDBC.targetSearch(target);
+        relatedWordListView.setVisible(false);
+        if (temp == null) {
             queryOptionPane.setVisible(false);
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Cannot find '" + searchArea.getText() + "' !");
@@ -237,7 +240,7 @@ public class HomeController {
                 dialog.showAndWait();
             }
         } else {
-            relatedWordListView.setVisible(false);
+            wordFound = temp;
             wordArea.setText(wordFound.getTarget());
             descriptionArea.setText(wordFound.getExplain());
             pronunciationArea.setText(wordFound.getPronounce());
@@ -459,10 +462,14 @@ public class HomeController {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     if (mouseEvent.getSource() == text) {
-                        wordFound = word;
                         dictionaryButtonOnClicked();
-                        searchArea.setText(word.getTarget());
-                        searchButtonOnClicked();
+                        wordFound = word;
+                        searchArea.setText(wordFound.getTarget());
+                        wordArea.setText(wordFound.getTarget());
+                        descriptionArea.setText(wordFound.getExplain());
+                        pronunciationArea.setText(wordFound.getPronounce());
+                        queryOptionPane.setVisible(true);
+                        setFavouriteShowings();
                     }
                 }
             });
