@@ -216,7 +216,11 @@ public class HomeController {
         int pos = relatedWordListView.getItems().indexOf(selectedItem);
         wordFound = relatedWordList.get(pos);
         searchArea.setText(wordFound.getTarget());
-        searchButtonOnClicked();
+        wordArea.setText(wordFound.getTarget());
+        descriptionArea.setText(wordFound.getExplain());
+        pronunciationArea.setText(wordFound.getPronounce());
+        queryOptionPane.setVisible(true);
+        setFavouriteShowings();
     }
 
     @FXML

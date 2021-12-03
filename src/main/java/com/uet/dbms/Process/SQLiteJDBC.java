@@ -35,7 +35,7 @@ public class SQLiteJDBC {
         Statement statement = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:dictionary.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:database.db");
             connection.setAutoCommit(false);
             statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM EngToVie Where word = \"" + target + "\";" );
