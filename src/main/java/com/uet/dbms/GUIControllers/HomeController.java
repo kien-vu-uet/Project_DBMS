@@ -215,6 +215,7 @@ public class HomeController {
         Text selectedItem = relatedWordListView.getSelectionModel().getSelectedItem();
         int pos = relatedWordListView.getItems().indexOf(selectedItem);
         wordFound = relatedWordList.get(pos);
+        relatedWordListView.setVisible(false);
         searchArea.setText(wordFound.getTarget());
         wordArea.setText(wordFound.getTarget());
         descriptionArea.setText(wordFound.getExplain());
