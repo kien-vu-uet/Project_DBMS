@@ -46,6 +46,7 @@ public class SQLiteJDBC {
             result = new Word(id, word, description, pronounce);
             rs.close();
             statement.close();
+            connection.commit();
             connection.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -408,7 +409,7 @@ public class SQLiteJDBC {
             connection.commit();
             connection.close();
             System.out.println("Delete done!");
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (Exception throwables) {
             throwables.printStackTrace();
         }
     }

@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -23,14 +24,12 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.net.URL;
+import java.util.*;
 
 import static javafx.scene.web.HTMLEditorSkin.Command.FONT_FAMILY;
 
-public class HomeController {
+public class HomeController implements Initializable {
     ////////////////////////// for back-end variables ///////////////
     private boolean[] shownInScene = { true, false, false };  // show: dictionary / text translation / user's favourite word
     private static List<Word> relatedWordList;
@@ -204,7 +203,7 @@ public class HomeController {
             File iconFile = new File("src/main/resources/com/uet/dbms/icons/icon.png");
             stage.getIcons().add(new Image(iconFile.toURI().toString()));
             alert.setHeaderText("Please login to use this utilities!");
-            alert.setContentText("Continue with 'Guest'?");
+            alert.setContentText("");
             alert.showAndWait();
         }
     }
@@ -336,19 +335,16 @@ public class HomeController {
             if (!topic.contains(wordFound)) topicIcon.setImage(starIcon);
             else topicIcon.setImage(starMarkIcon);
 //            System.out.println(topic.contains(wordFound));
-            topicItem.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    if (event.getSource() == topicItem) {
-                        if (!topic.contains(wordFound)) {
-                            SQLiteJDBC.insertWordToFavourite(Main.getUserAccount().getId(), topic.getContent(), wordFound.getId());
-                            topic.getWordList().add(wordFound);
-                            topicIcon.setImage(starMarkIcon);
-                        } else {
-                            SQLiteJDBC.deleteWordOnFavourite(Main.getUserAccount().getId(), topic.getContent(), wordFound.getId());
-                            topic.getWordList().remove(wordFound);
-                            topicIcon.setImage(starIcon);
-                        }
+            topicItem.setOnAction(event -> {
+                if (event.getSource() == topicItem) {
+                    if (!topic.contains(wordFound)) {
+                        SQLiteJDBC.insertWordToFavourite(Main.getUserAccount().getId(), topic.getContent(), wordFound.getId());
+                        topic.getWordList().add(wordFound);
+                        topicIcon.setImage(starMarkIcon);
+                    } else {
+                        SQLiteJDBC.deleteWordOnFavourite(Main.getUserAccount().getId(), topic.getContent(), wordFound.getId());
+                        topic.getWordList().remove(wordFound);
+                        topicIcon.setImage(starIcon);
                     }
                 }
             });
@@ -387,63 +383,54 @@ public class HomeController {
             renameOption.setUnderline(true);
             renameOption.setVisible(false);
             int finalI = i;
-            renameOption.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    TextInputDialog dialog = new TextInputDialog();
-                    dialog.setTitle("Rename");
-                    Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-                    File iconFile = new File("src/main/resources/com/uet/dbms/icons/icon.png");
-                    stage.getIcons().add(new Image(iconFile.toURI().toString()));
-                    dialog.setHeaderText("Enter new name: ");
-                    dialog.setContentText("Name: ");
-                    dialog.showAndWait();
-                    String name = dialog.getEditor().getText();
-                    if (name.isEmpty()) name = "Unnamed";
-                    SQLiteJDBC.changeTopicName(topic.getContent(), name);
-                    topic.setContent(name);
-                    topicListView.getItems().get(finalI * 3).setText(name);
-                }
+            renameOption.setOnMouseClicked(mouseEvent -> {
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Rename");
+                Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+                File iconFile = new File("src/main/resources/com/uet/dbms/icons/icon.png");
+                stage.getIcons().add(new Image(iconFile.toURI().toString()));
+                dialog.setHeaderText("Enter new name: ");
+                dialog.setContentText("Name: ");
+                dialog.showAndWait();
+                String name = dialog.getEditor().getText();
+                if (name.isEmpty()) name = "Unnamed";
+                SQLiteJDBC.changeTopicName(topic.getContent(), name);
+                topic.setContent(name);
+                topicListView.getItems().get(finalI * 3).setText(name);
             });
             Text deleteOption = new Text("Delete\n");
             deleteOption.setFont(Font.font(String.valueOf(FONT_FAMILY), FontPosture.ITALIC, 12));
             deleteOption.setUnderline(true);
             deleteOption.setVisible(false);
-            deleteOption.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Delete");
-                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                    File iconFile = new File("src/main/resources/com/uet/dbms/icons/icon.png");
-                    stage.getIcons().add(new Image(iconFile.toURI().toString()));
-                    alert.setHeaderText("You won't see this topic in the future!");
-                    alert.setContentText("Continue?");
-                    Optional<ButtonType> action = alert.showAndWait();
-                    if (action.isPresent() && action.get() == ButtonType.OK) {
-                        SQLiteJDBC.deleteTopic(topic.getContent(), Main.getUserAccount().getId());
-                        favouriteTopicList.remove(finalI);
-                        topicListView.getItems().remove(finalI * 3);
-                        topicListView.getItems().remove(finalI * 3);
-                        topicListView.getItems().remove(finalI * 3);
-                    }
+            deleteOption.setOnMouseClicked(mouseEvent -> {
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Delete");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                File iconFile = new File("src/main/resources/com/uet/dbms/icons/icon.png");
+                stage.getIcons().add(new Image(iconFile.toURI().toString()));
+                alert.setHeaderText("You won't see this topic in the future!");
+                alert.setContentText("Continue?");
+                Optional<ButtonType> action = alert.showAndWait();
+                if (action.isPresent() && action.get() == ButtonType.OK) {
+                    SQLiteJDBC.deleteTopic(topic.getContent(), Main.getUserAccount().getId());
+                    favouriteTopicList.remove(finalI);
+                    topicListView.getItems().remove(finalI * 3);
+                    topicListView.getItems().remove(finalI * 3);
+                    topicListView.getItems().remove(finalI * 3);
                 }
             });
             Text text = new Text(topic.getContent());
             text.setFont(new Font(24));
             text.setWrappingWidth(150);
-            text.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    if (mouseEvent.getSource() == text) {
-                        createWordsGUI(topic);
-                        for (int j = 0; j < topicListView.getItems().size(); j++) {
-                            if (j % 3 == 0) continue;
-                            topicListView.getItems().get(j).setVisible(false);
-                        }
-                        renameOption.setVisible(true);
-                        deleteOption.setVisible(true);
+            text.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getSource() == text) {
+                    createWordsGUI(topic);
+                    for (int j = 0; j < topicListView.getItems().size(); j++) {
+                        if (j % 3 == 0) continue;
+                        topicListView.getItems().get(j).setVisible(false);
                     }
+                    renameOption.setVisible(true);
+                    deleteOption.setVisible(true);
                 }
             });
             text.setFill(Color.CHOCOLATE);
@@ -463,19 +450,16 @@ public class HomeController {
             text.setWrappingWidth(550);
             text.setFont(new Font(24));
             text.setFill(Color.ROYALBLUE);
-            text.setOnMouseClicked(new EventHandler<>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    if (mouseEvent.getSource() == text) {
-                        dictionaryButtonOnClicked();
-                        wordFound = word;
-                        searchArea.setText(wordFound.getTarget());
-                        wordArea.setText(wordFound.getTarget());
-                        descriptionArea.setText(wordFound.getExplain());
-                        pronunciationArea.setText(wordFound.getPronounce());
-                        queryOptionPane.setVisible(true);
-                        setFavouriteShowings();
-                    }
+            text.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getSource() == text) {
+                    dictionaryButtonOnClicked();
+                    wordFound = word;
+                    searchArea.setText(wordFound.getTarget());
+                    wordArea.setText(wordFound.getTarget());
+                    descriptionArea.setText(wordFound.getExplain());
+                    pronunciationArea.setText(wordFound.getPronounce());
+                    queryOptionPane.setVisible(true);
+                    setFavouriteShowings();
                 }
             });
             wordsListView.getItems().add(text);
@@ -483,15 +467,12 @@ public class HomeController {
             deleteOption.setFont(Font.font(String.valueOf(FONT_FAMILY), FontPosture.ITALIC, 12));
             deleteOption.setUnderline(true);
             int finalI = i;
-            deleteOption.setOnMouseClicked(new EventHandler<>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    if (mouseEvent.getSource() == deleteOption) {
-                        topic.getWordList().remove(word);
-                        SQLiteJDBC.deleteWordOnFavourite(Main.getUserAccount().getId(), topic.getContent(), word.getId());
-                        wordsListView.getItems().remove(finalI * 2);
-                        wordsListView.getItems().remove(finalI * 2);
-                    }
+            deleteOption.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getSource() == deleteOption) {
+                    topic.getWordList().remove(word);
+                    SQLiteJDBC.deleteWordOnFavourite(Main.getUserAccount().getId(), topic.getContent(), word.getId());
+                    wordsListView.getItems().remove(finalI * 2);
+                    wordsListView.getItems().remove(finalI * 2);
                 }
             });
             wordsListView.getItems().add(deleteOption);
@@ -532,18 +513,21 @@ public class HomeController {
             stage.getIcons().add(Main.getIcon());
             stage.setScene(scene);
             stage.show();
-            // load all user favourite word into 'favouriteTopicList'
-            if (Main.getUserAccount().getId() != 0) {
-                favouriteTopicList = new ArrayList<>();
-                List<String> topicList = SQLiteJDBC.queryFavouriteTopic(Main.getUserAccount().getId());
-                for (String topicContent : topicList) {
-                    favouriteTopicList.add(new Topic(topicContent));
-                    System.out.println(topicContent);
-                }
-            }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + e.getMessage());
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // load all user favourite word into 'favouriteTopicList'
+        favouriteTopicList = new ArrayList<>();
+        List<String> topicList = SQLiteJDBC.queryFavouriteTopic(Main.getUserAccount().getId());
+        for (String topicContent : topicList) {
+            favouriteTopicList.add(new Topic(topicContent));
+            System.out.println(topicContent);
+        }
+        setFavouriteShowings();
     }
     /////////////////////////////////////////////////////////////////
 }

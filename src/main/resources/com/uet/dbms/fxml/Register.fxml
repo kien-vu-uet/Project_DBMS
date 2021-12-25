@@ -48,7 +48,7 @@
             <Font name="Jokerman" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="59.0" layoutY="242.0" text="Password" textFill="#a92c2c">
+      <Label layoutX="59.0" layoutY="242.0" text="Confirm " textFill="#a92c2c">
          <font>
             <Font name="Jokerman" size="24.0" />
          </font>
